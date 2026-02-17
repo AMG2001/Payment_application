@@ -19,7 +19,7 @@ public class LoginBoard {
         String password = get.nextLine();
 
         if(loginBoardService.login(phoneNumber,password).isPresent()){
-            homeBoard.showHomeBoard()
+            homeBoard.showHomeBoard();
         }
     }
 }
