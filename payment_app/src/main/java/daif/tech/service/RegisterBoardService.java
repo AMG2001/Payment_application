@@ -8,15 +8,7 @@ import java.math.BigDecimal;
 
 public class RegisterBoardService {
 
-    private UserDB userDB = UserDB.getInstance();
-
-    public boolean validatePhoneNumber(String phoneNumber) {
-        return phoneNumber.contains(" ") || phoneNumber.length() != 11;
-    }
-
-    public boolean validateEnteredUserName(String username) {
-        return username.contains(" ");
-    }
+    private UserDB userDB = new UserDB();
 
     public void registerUser(String username,String password,String phoneNumber,BigDecimal initialBalance) {
         User newUser = new User(username, password, phoneNumber, initialBalance);

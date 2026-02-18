@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class LoginBoardService {
 
-    private UserDB userDB = UserDB.getInstance();
+    private UserDB userDB = new UserDB();
 
     public Optional<User> login(String phoneNumber,String password){
         Optional<User> user = Optional.empty();

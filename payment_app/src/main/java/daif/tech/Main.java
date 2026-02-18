@@ -9,11 +9,7 @@ public class Main {
 
         boolean isRunning = true;
         while (isRunning) {
-           int choice = mainBoard.showMainBoard();
-           switch (choice){
-               case 1 -> mainBoard.showLoginBoard();
-               case 2 -> mainBoard.showRegisterPage();
-           }
+            mainBoard.showMainBoard();
         }
     }
 }

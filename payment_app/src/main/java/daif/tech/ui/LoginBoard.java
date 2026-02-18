@@ -2,6 +2,7 @@ package daif.tech.ui;
 
 import daif.tech.model.User;
 import daif.tech.service.LoginBoardService;
+import daif.tech.util.UserInfoValidator;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -26,11 +27,21 @@ public class LoginBoard {
     public void showLoginBoard(){
         Scanner get = new Scanner(System.in);
 
-        System.out.print("Enter your phone number : ");
-        String phoneNumber = get.nextLine();
+        boolean isValidPhoneNumber = false,isValidPassword = false;
+        String phoneNumber = "",password = "";
 
-        System.out.print("Enter your password : ");
-        String password = get.nextLine();
+        while(!isValidPhoneNumber){
+            System.out.print("Enter your phone number : ");
+            phoneNumber = get.nextLine();
+            isValidPhoneNumber = UserInfoValidator.validatePhoneNumber(phoneNumber);
+        }
+
+
+        while (!isValidPassword){
+            System.out.print("Enter your password : ");
+            password = get.nextLine();
+            isValidPassword = UserInfoValidator.validatePasswordLength(password);
+        }
 
         Optional<User> user = loginBoardService.login(phoneNumber,password);
         user.ifPresent(value -> PagesContext.HOME_BOARD.showHomeBoard(value));

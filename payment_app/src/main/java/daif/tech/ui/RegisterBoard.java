@@ -1,6 +1,7 @@
 package daif.tech.ui;
 
 import daif.tech.service.RegisterBoardService;
+import daif.tech.util.UserInfoValidator;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -22,7 +23,7 @@ public class RegisterBoard {
 
     RegisterBoardService registerBoardService = new RegisterBoardService();
 
-    public void showRegisterBoard() throws InterruptedException {
+    public void showRegisterBoard(){
 
         Scanner get = new Scanner(System.in);
 
@@ -34,17 +35,14 @@ public class RegisterBoard {
         while (isNotValidUserName) {
             System.out.println("Enter your preferred username : ");
             username = get.nextLine();
-            isNotValidUserName = registerBoardService.validateEnteredUserName(username);
-            if (isNotValidUserName) System.out.println("Username can't contain spaces");
+            isNotValidUserName = UserInfoValidator.validateEnteredUserName(username);
         }
 
         String phoneNumber = "";
         while (isNotValidPhoneNumber) {
             System.out.println("Enter your phone number : ");
             phoneNumber = get.nextLine();
-            isNotValidPhoneNumber = registerBoardService.validatePhoneNumber(phoneNumber);
-            if (isNotValidPhoneNumber)
-                System.out.println("phone number can't contain spaces and the length must be 11");
+            isNotValidPhoneNumber = UserInfoValidator.validatePhoneNumber(phoneNumber);
         }
 
 
