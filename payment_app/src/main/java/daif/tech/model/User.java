@@ -30,4 +30,18 @@ public class User {
     public BigDecimal getBalance() {
         return balance;
     }
+
+    public void deposit(BigDecimal amount){
+        if(amount.doubleValue()<0){
+            System.out.println("You can't add amount with negative value");
+        }else balance = balance.add(amount);
+    }
+
+    public void withdraw(BigDecimal amount){
+        if(balance.subtract(amount).doubleValue()<0){
+            System.out.println("The available balance is not enough to proceed");
+        }else{
+            balance = balance.subtract(amount);
+        }
+    }
 }

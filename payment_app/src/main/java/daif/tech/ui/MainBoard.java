@@ -4,16 +4,24 @@ import java.util.Scanner;
 
 public class MainBoard {
 
-    private LoginBoard loginBoard = new LoginBoard();
-    private RegisterBoard registerBoard = new RegisterBoard();
-    private LoggedUserOptionsBoard loggedUserOptionsBoard = new LoggedUserOptionsBoard();
+    private static MainBoard mainBoard;
 
+    private MainBoard(){
+
+    }
+
+    public static MainBoard getInstance(){
+        if(mainBoard == null){
+            mainBoard = new MainBoard();
+        }
+        return mainBoard;
+    }
     public void showLoginBoard() {
-        loginBoard.showLoginBoard();
+        PagesContext.LOGIN_BOARD.showLoginBoard();
     }
 
     public void showRegisterPage() throws InterruptedException {
-        registerBoard.showRegisterBoard();
+        PagesContext.REGISTER_BOARD.showRegisterBoard();
     }
 
     public int showMainBoard() {

@@ -7,6 +7,18 @@ import java.util.Scanner;
 
 public class RegisterBoard {
 
+    private static RegisterBoard registerBoard;
+
+    private RegisterBoard(){
+
+    }
+
+    public static RegisterBoard getInstance(){
+        if(registerBoard == null){
+            registerBoard = new RegisterBoard();
+        }
+        return registerBoard;
+    }
 
     RegisterBoardService registerBoardService = new RegisterBoardService();
 
