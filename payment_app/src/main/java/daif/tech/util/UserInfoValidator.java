@@ -1,5 +1,8 @@
 package daif.tech.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class UserInfoValidator {
 
     public static boolean validatePhoneNumber(String phoneNumber) {
@@ -11,11 +14,14 @@ public class UserInfoValidator {
     }
 
     public static boolean validateEnteredUserName(String username) {
-        if(username.contains(" ")){
-            System.out.println("user name can't contain spaces");
-            return false;
-        }
-        return true;
+        // Username should only contain characters with either . or _
+         Pattern USERNAME_PATTERN = Pattern.compile("[a-zA-Z._]+");
+         boolean isValid = USERNAME_PATTERN.matcher(username).matches();
+         if(isValid) return true;
+         else{
+             System.out.println("Username can only hold characters with . or _");
+             return false;
+         }
     }
 
     public static boolean validatePasswordLength(String password) {
