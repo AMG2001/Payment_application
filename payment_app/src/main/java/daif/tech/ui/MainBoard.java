@@ -1,10 +1,13 @@
 package daif.tech.ui;
 
+import daif.tech.service.MainBoardService;
+
 import java.util.Scanner;
 
 public class MainBoard {
 
     private static MainBoard mainBoard;
+    private MainBoardService mainBoardService = new MainBoardService();
 
     private MainBoard() {
 
@@ -40,8 +43,9 @@ public class MainBoard {
                 int choice = Integer.parseInt(get.nextLine());
                 isNotValidInput = false;
                 switch (choice) {
-                    case 1 -> mainBoard.showLoginBoard();
-                    case 2 -> mainBoard.showRegisterPage();
+                    case 1 -> showLoginBoard();
+                    case 2 -> showRegisterPage();
+                    case 0 -> mainBoardService.logAllTransactions();
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Kindly enter valid option number.");

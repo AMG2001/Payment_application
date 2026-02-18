@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public class TransactionDB {
 
-    ArrayList<Transaction> transactionsDB = new ArrayList<>();
+    private static volatile ArrayList<Transaction> transactionsDB = new ArrayList<>();
 
-    public void logNewTransaction(Transaction transaction){
+    public synchronized void logNewTransaction(Transaction transaction){
         transactionsDB.add(transaction);
     }
 
-    public void showAllTransaction(){
+    public synchronized void showAllTransaction(){
         transactionsDB.forEach(System.out::println);
     }
 }

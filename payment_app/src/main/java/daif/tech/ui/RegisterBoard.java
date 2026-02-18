@@ -29,7 +29,8 @@ public class RegisterBoard {
 
         boolean isValidUserName = false,
                 isValidPhoneNumber = false,
-                isValidBalanceOptionChoice = false;
+                isValidBalanceOptionChoice = false,
+                isValidPassword = false;
 
         String username = "";
         while (!isValidUserName) {
@@ -45,9 +46,12 @@ public class RegisterBoard {
             isValidPhoneNumber = UserInfoValidator.validatePhoneNumber(phoneNumber);
         }
 
-
-        System.out.println("Enter your password : ");
-        String password = get.nextLine();
+        String password = "";
+        while (!isValidPassword){
+            System.out.println("Enter your password : ");
+            password = get.nextLine();
+            isValidPassword = UserInfoValidator.validatePasswordLength(password);
+        }
 
         BigDecimal initialBalance = new BigDecimal(0);
         while (!isValidBalanceOptionChoice) {

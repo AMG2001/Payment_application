@@ -1,7 +1,6 @@
 package daif.tech.ui;
 
 import daif.tech.model.User;
-import daif.tech.repo.UserDB;
 import daif.tech.service.HomeBoardService;
 
 import java.math.BigDecimal;
@@ -12,8 +11,6 @@ public class HomeBoard {
     private boolean isLoggedIn = false;
 
     private static HomeBoard homeBoard;
-
-    private UserDB userDB = new UserDB();
 
     private HomeBoard(){
 
@@ -70,7 +67,7 @@ public class HomeBoard {
         while (!isPhoneNumberExists){
             System.out.println("Enter the phone number that you want to transfer to : ");
             String receiverPhoneNumber = new Scanner(System.in).nextLine();
-            isPhoneNumberExists = userDB.isUserExists(receiverPhoneNumber);
+            isPhoneNumberExists = homeBoardService.checkIfUserExists(receiverPhoneNumber);
             if(isPhoneNumberExists){
                 System.out.println("Enter amount you want to transfer : ");
                 BigDecimal amount = new Scanner(System.in).nextBigDecimal();
