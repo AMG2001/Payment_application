@@ -25,4 +25,13 @@ public class UserInfoValidator {
         }
         return true;
     }
+
+    public static boolean isValidOptionCharacter(String character){
+        if(character.equalsIgnoreCase("y") || character.equalsIgnoreCase("n")){
+            return true;
+        }else{
+            System.out.println("Kindly enter either Y or N");
+            return false;
+        }
+    }
 }
