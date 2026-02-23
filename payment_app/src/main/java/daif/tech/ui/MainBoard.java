@@ -37,7 +37,8 @@ public class MainBoard {
             System.out.println("""
                     Choose what you want to do :
                     1. Login.
-                    2. Register.""");
+                    2. Register.
+                    3. Exit""");
             System.out.print("-> ");
             try {
                 int choice = Integer.parseInt(get.nextLine());
@@ -45,6 +46,7 @@ public class MainBoard {
                 switch (choice) {
                     case 1 -> showLoginBoard();
                     case 2 -> showRegisterPage();
+                    case 3 -> System.exit(0);
                     case 0 -> mainBoardService.logAllTransactions();
                 }
             } catch (NumberFormatException e) {
