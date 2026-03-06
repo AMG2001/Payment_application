@@ -1,5 +1,6 @@
 package daif.tech.ui;
 
+import daif.tech.exception.AvailableBalanceNotEnoughException;
 import daif.tech.exception.UserNotFoundException;
 import daif.tech.model.User;
 import daif.tech.service.HomeBoardService;
@@ -129,7 +130,7 @@ public class HomeBoard {
             homeBoardService.withdraw(amount);
         }catch (InputMismatchException e){
             System.out.println("Please enter a valid positive numeric value");
-        }catch (IllegalArgumentException e){
+        }catch (IllegalArgumentException | AvailableBalanceNotEnoughException e){
             System.out.println(e.getMessage());
         }
     }

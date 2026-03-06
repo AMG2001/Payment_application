@@ -1,5 +1,7 @@
 package daif.tech.model;
 
+import daif.tech.exception.AvailableBalanceNotEnoughException;
+
 import java.math.BigDecimal;
 
 public class User {
@@ -7,12 +9,22 @@ public class User {
     private String password;
     private BigDecimal balance;
     private int age;
+    private boolean isAdmin;
 
     public User(String userName, String password, String phoneNumber,int age, BigDecimal balance) {
         this.userKey = new UserKey(phoneNumber,userName);
         this.password = password;
         this.age = age;
         this.balance = balance;
+        isAdmin = false;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public void setPassword(String password) {
@@ -49,9 +61,12 @@ public class User {
         }else balance = balance.add(amount);
     }
 
-    public void withdraw(BigDecimal amount){
+    public void withdraw(BigDecimal amount) throws AvailableBalanceNotEnoughException {
+        if(amount.doubleValue()<=0){
+            throw new IllegalArgumentException("Entered amount can't be negative or zero");
+        }
         if(balance.subtract(amount).doubleValue()<0){
-            System.out.println("The available balance is not enough to proceed");
+            throw new AvailableBalanceNotEnoughException();
         }else{
             balance = balance.subtract(amount);
         }

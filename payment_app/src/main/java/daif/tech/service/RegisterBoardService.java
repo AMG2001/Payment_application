@@ -10,13 +10,12 @@ import java.math.BigDecimal;
 
 public class RegisterBoardService {
 
-    private UserDB userDB = new UserDB();
     private TransactionDB transactionDB = new TransactionDB();
 
     public void registerUser(String username,String password,String phoneNumber,int age,BigDecimal initialBalance) {
         User newUser = new User(username, password, phoneNumber, age,initialBalance);
         try {
-            userDB.addUser(newUser);
+            UserDB.getInstance().addUser(newUser);
             transactionDB.logNewTransaction(new Transaction(
                     String.format("User with user name : \"%s\" is Registered",newUser.getUserName())
             ));

@@ -1,5 +1,6 @@
 package daif.tech.repo;
 
+import daif.tech.exception.AvailableBalanceNotEnoughException;
 import daif.tech.exception.InvalidCredentialsException;
 import daif.tech.exception.UserAlreadyExistsException;
 import daif.tech.exception.UserNotFoundException;
@@ -12,6 +13,29 @@ import java.util.Map;
 import java.util.Optional;
 
 public class UserDB {
+
+    private static volatile UserDB userDB;
+
+    public static UserDB getInstance(){
+        if(userDB == null){
+            userDB =  new UserDB();
+        }
+        return userDB;
+    }
+
+    public void initialize(){
+        // Add just a single admin user by default.
+        try {
+            User adminUser = userDB.addUser(new User("IAM","IAM123","01111111111",24,new BigDecimal("0.0")));
+            adminUser.setAdmin(true);
+        } catch (UserAlreadyExistsException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private UserDB(){
+
+    }
 
     private static volatile Map<UserKey, User> usersMap = new HashMap<>();
 
@@ -26,7 +50,7 @@ public class UserDB {
         throw new InvalidCredentialsException("Invalid credentials");
     }
 
-    public void addUser(User user) throws UserAlreadyExistsException {
+    public User addUser(User user) throws UserAlreadyExistsException {
 
         UserKey newUserKey = new UserKey(user.getPhoneNumber(), user.getUserName());
 
@@ -41,13 +65,14 @@ public class UserDB {
         }
 
         usersMap.put(newUserKey, user);
+        return user;
     }
 
     public boolean isUserExists(UserKey userKey){
         return usersMap.containsKey(userKey);
     }
 
-    public void transferToUser(UserKey senderUserKey, String receiverNumber, BigDecimal amount) throws UserNotFoundException {
+    public void transferToUser(UserKey senderUserKey, String receiverNumber, BigDecimal amount) throws UserNotFoundException, AvailableBalanceNotEnoughException {
         usersMap.get(senderUserKey).withdraw(amount);
 
         Optional<UserKey> receiverUserKey = fetchUserKeyOfReceiverByPhoneNumber(receiverNumber);
@@ -84,5 +109,18 @@ public class UserDB {
                 .keySet()
                 .stream().filter(userKey -> userKey.getPhoneNumber().equals(phoneNumber)).findFirst();
 
+    }
+
+    public void showAllUsers(){
+        usersMap.values().forEach(System.out::println);
+    }
+
+    public void removeAccount(String username){
+        Optional<UserKey> userKey = fetchUserKeyOfReceiverByUserName(username);
+        if(usersMap.containsKey(userKey.get())){
+            usersMap.remove(userKey.get());
+        }else{
+            System.out.println("User doesn't exist");
+        }
     }
 }

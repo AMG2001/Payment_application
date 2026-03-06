@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class MainBoard {
 
     private static MainBoard mainBoard;
-    private MainBoardService mainBoardService = new MainBoardService();
 
     private MainBoard() {
 
@@ -47,7 +46,6 @@ public class MainBoard {
                     case 1 -> showLoginBoard();
                     case 2 -> showRegisterPage();
                     case 3 -> System.exit(0);
-                    case 0 -> mainBoardService.logAllTransactions();
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Kindly enter valid option number.");

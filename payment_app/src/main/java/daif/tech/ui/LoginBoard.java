@@ -56,7 +56,11 @@ public class LoginBoard {
 
        try{
            User user = loginBoardService.login(username,password);
-           PagesContext.HOME_BOARD.showHomeBoard(user);
+           if(user.isAdmin()){
+               PagesContext.ADMIN_BOARD.showAdminBoard();
+           }else{
+               PagesContext.HOME_BOARD.showHomeBoard(user);
+           }
        }catch (RuntimeException | InvalidCredentialsException e){
            System.out.println(e.getMessage());
        }

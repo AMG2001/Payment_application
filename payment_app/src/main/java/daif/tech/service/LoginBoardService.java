@@ -8,12 +8,11 @@ import daif.tech.repo.UserDB;
 
 public class LoginBoardService {
 
-    private UserDB userDB = new UserDB();
     private TransactionDB transactionDB = new TransactionDB();
 
     public User login(String username, String password) throws InvalidCredentialsException {
         User user;
-        user = userDB.getUser(username, password);
+        user = UserDB.getInstance().getUser(username, password);
         System.out.println("Welcome back, " + user.getUserName());
 
         transactionDB.logNewTransaction(new Transaction(

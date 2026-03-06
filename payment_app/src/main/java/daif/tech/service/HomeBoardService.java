@@ -8,17 +8,15 @@ import daif.tech.repo.UserDB;
 import daif.tech.util.UserInfoValidator;
 
 import java.math.BigDecimal;
-import java.util.Scanner;
 
 public class HomeBoardService {
 
-    private UserDB userDB = new UserDB();
     TransactionDB transactionDB = new TransactionDB();
 
     private User user;
 
     public void logout(){
-        System.out.println("User Logged out successfully");
+        System.out.printf("User Logged out successfully, goodbye %s",user.getUserName());
         user = null;
     }
 
@@ -36,38 +34,37 @@ public class HomeBoardService {
             throw new IllegalArgumentException("User can't transfer for him self");
         }
 
-        return userDB.isUserExists(user.getUserKey());
+        return UserDB.getInstance().isUserExists(user.getUserKey());
     }
 
     public void deposit(BigDecimal amount) throws IllegalArgumentException{
         if(amount.doubleValue() < 0){
             throw new IllegalArgumentException("Amount can't be negative value");
         }
-        userDB.deposit(user.getUserKey(),amount);
+        UserDB.getInstance().deposit(user.getUserKey(),amount);
         System.out.println("Deposited successfully");
         transactionDB.logNewTransaction(new Transaction(
                 String.format("User with user name : \"%s\" is depositing %.2f",user.getUserName(),amount.doubleValue())
         ));
     }
 
-    public void withdraw(BigDecimal amount)throws IllegalArgumentException{
-        if(amount.doubleValue() < 0){
-            throw new IllegalArgumentException("Amount can't be negative value");
+    public void withdraw(BigDecimal amount){
+        if(amount.doubleValue() <= 0){
+            throw new IllegalArgumentException("Entered amount can't be negative or zero");
         }
-        userDB.withdraw(user.getUserKey(),amount);
-        System.out.printf("Amount withdrawn successfully%n",amount.doubleValue());
+        UserDB.getInstance().withdraw(user.getUserKey(),amount);
+        System.out.printf("Amount withdrawn successfully%n");
         transactionDB.logNewTransaction(new Transaction(
                 String.format("User with user name : \"%s\" is withdrawing %.2f",user.getUserName(),amount.doubleValue())
         ));
     }
 
     public double getBalance(){
-        return userDB.getBalance(user.getUserKey());
+        return UserDB.getInstance().getBalance(user.getUserKey());
     }
 
     public void transfer(String receiverPhoneNumber,BigDecimal amount) throws UserNotFoundException {
-
-        userDB.transferToUser(user.getUserKey(),receiverPhoneNumber,amount);
+        UserDB.getInstance().transferToUser(user.getUserKey(),receiverPhoneNumber,amount);
         System.out.println("Transfer process is done successfully");
         transactionDB.logNewTransaction(new Transaction(
                 String.format("User with user name : \"%s\" is transferring %.2f to \"%s\"",user.getUserName(),amount.doubleValue(),receiverPhoneNumber)

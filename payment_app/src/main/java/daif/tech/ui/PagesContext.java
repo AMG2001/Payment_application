@@ -5,4 +5,5 @@ public class PagesContext {
     public static RegisterBoard REGISTER_BOARD = RegisterBoard.getInstance();
     public static MainBoard MAIN_BOARD = MainBoard.getInstance();
     public static HomeBoard HOME_BOARD = HomeBoard.getInstance();
+    public static AdminBoard ADMIN_BOARD = AdminBoard.getInstance();
 }
